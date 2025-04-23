@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>reCAPTCHA</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="g-recaptcha"
+      data-sitekey="6LeyPswqAAAAAM4oNwrlQqRrp2OQmcSQSh9onehn"
+      data-callback="onVerify"
+      data-size="invisible"
+    ></div>
+
+    <script>
+      function onVerify(token) {
+        // Send token to React Native app
+        if (window.ReactNativeWebView) {
+          window.ReactNativeWebView.postMessage(token);
+        } else {
+          console.warn("No ReactNativeWebView context");
+        }
+      }
+
+      window.onload = function () {
+        grecaptcha.ready(function () {
+          grecaptcha.execute();
+        });
+      };
+    </script>
+  </body>
+</html>
