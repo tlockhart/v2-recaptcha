@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>reCAPTCHA</title>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #ffffff;
-      }
-    </style>
-  </head>
-  <body>
-    <div
-      class="g-recaptcha"
-      data-sitekey="6LeVOiErAAAAAJ8FtIDe7wIcmgo2vYuTCMzSZuDw"
-      data-callback="onVerify"
-      data-size="invisible"
-    ></div>
 
-    <script>
-      function onVerify(token) {
-        // Send token to React Native app
-        if (window.ReactNativeWebView) {
-          window.ReactNativeWebView.postMessage(token);
-        } else {
-          console.warn("No ReactNativeWebView context");
-        }
-      }
+<head>
+  <meta charset="UTF-8" />
+  <title>reCAPTCHA</title>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #ffffff;
+    }
 
-      window.onload = function () {
-        grecaptcha.ready(function () {
-          grecaptcha.execute();
-        });
-      };
-    </script>
-  </body>
+    .grecaptcha-badge {
+      bottom: 20px !important;
+      right: 20px !important;
+      transform: scale(1.2);
+      /* optional: increase visibility */
+      z-index: 9999;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="g-recaptcha" data-sitekey="6LeVOiErAAAAAJ8FtIDe7wIcmgo2vYuTCMzSZuDw" data-callback="onVerify"
+    data-size="invisible"></div>
+
+  <script>
+    function onVerify(token) {
+      // Send token to React Native app
+      if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(token);
+      } else {
+        console.warn("No ReactNativeWebView context");
+      }
+    }
+
+    window.onload = function () {
+      grecaptcha.ready(function () {
+        grecaptcha.execute();
+      });
+    };
+  </script>
+</body>
+
 </html>
